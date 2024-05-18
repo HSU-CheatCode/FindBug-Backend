@@ -1,7 +1,6 @@
 package com.findbug.findbugbackend.domain.member;
 
-import com.findbug.findbugbackend.domain.Address;
-import com.findbug.findbugbackend.domain.Company;
+import com.findbug.findbugbackend.domain.valueTable.Address;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -9,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -22,36 +19,14 @@ public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private LoginMethod loginMethod;
+
+    private String email;
+    private String phoneNumber;
 
     @Embedded
     private Address address;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
-
-    private String name;
-    private String email;
-    private String phoneNumber;
-    private LocalDateTime registrationDate;
-
-    public static Member createMember(
-            Address address, Company company, String name, String email, String phoneNumber, LocalDateTime registrationDate) {
-        return builder()
-                .address(address)
-                .company(company)
-                .name(name)
-                .email(email)
-                .phoneNumber(phoneNumber)
-                .registrationDate(registrationDate)
-                .build();
-    }
-
-    public void updateMember(Address address, Company company, String name, String email, String phoneNumber) {
-        this.address = address;
-        this.company = company;
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
 }

@@ -20,14 +20,4 @@ public class Bug {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bug_id")
     private Long id;
-
-    private String image;
-    private String description;
-
-    public static Bug createBug(String image, String description) {
-        return builder()
-                .image(image)
-                .description(description)
-                .build();
-    }
 }
