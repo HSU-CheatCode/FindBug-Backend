@@ -1,4 +1,4 @@
-package com.findbug.findbugbackend.domain.valueTable;
+package com.findbug.findbugbackend.domain;
 
 
 import jakarta.persistence.Embeddable;

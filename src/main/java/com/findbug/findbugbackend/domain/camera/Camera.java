@@ -20,12 +20,20 @@ public class Camera {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "camera_id")
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private CameraType type;
+
+    @Enumerated(EnumType.STRING)
+    private CameraSoftwareVersion softwareVersion;
+
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    private CameraType cameraType;
-
-    @Enumerated(EnumType.STRING)
-    private CameraSoftwareVersion cameraSoftwareVersion;
-
+    public static Camera createCamera(CameraType type, CameraSoftwareVersion softwareVersion, String name) {
+        return builder()
+                .type(type)
+                .softwareVersion(softwareVersion)
+                .name(name)
+                .build();
+    }
 }

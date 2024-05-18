@@ -1,7 +1,6 @@
 package com.findbug.findbugbackend.domain;
 
 import com.findbug.findbugbackend.domain.member.Member;
-import com.findbug.findbugbackend.domain.valueTable.Address;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,10 +15,10 @@ import lombok.extern.jackson.Jacksonized;
 @SuperBuilder
 @Jacksonized
 @Getter
-public class PestControlCompany {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "pest_control_company_id")
+    @Column(name = "company_id")
     private Long id;
     private String name;
     private String email;
@@ -35,5 +34,5 @@ public class PestControlCompany {
 
     private String companyDescription;
     private String businessDescription;
-    private byte[] logoImage;
+    private String logoImage;
 }
