@@ -37,10 +37,8 @@ public class AlarmApiController {
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("alarm/{userId}/list")
-    public AlarmPageDto getBugAlarmList(@PathVariable("id") Long userId) {
+    public void getBugAlarmList(@PathVariable("id") Long userId) {
 
-        AlarmPageDto alarmPageDto = new AlarmPageDto();
-        return alarmPageDto;
     }
 
     // 벌레 알람 단일 내용 삭제
