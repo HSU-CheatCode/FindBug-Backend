@@ -26,7 +26,8 @@ public class DetectedBug {
     @JoinColumn(name = "bug_id")
     private Bug bug;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.LAZY) // 양방향
     @JoinColumn(name = "alarm_id")
     private Alarm alarm;
 

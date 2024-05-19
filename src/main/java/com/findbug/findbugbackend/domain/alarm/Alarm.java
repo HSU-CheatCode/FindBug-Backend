@@ -36,6 +36,7 @@ public class Alarm {
     private List<DetectedBug> detectedBugs = new ArrayList<>();
 
     public static Alarm createAlarm(Camera camera, List<DetectedBug> detectedBugs) {
+
         return builder()
                 .camera(camera)
                 .detectedBugs(detectedBugs)
