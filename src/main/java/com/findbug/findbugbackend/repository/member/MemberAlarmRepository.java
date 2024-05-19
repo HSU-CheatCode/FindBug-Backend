@@ -34,15 +34,38 @@ public class MemberAlarmRepository {
                 .getResultList();
     }
 
+    // Member 가 소유한 모든 탐지내역 을 반환한다.
     public List<MemberAlarm> findByMember(Member member){
         return em.createQuery("select m from MemberAlarm m where m.member = :member", MemberAlarm.class)
                 .setParameter("member", member)
                 .getResultList();
     }
 
+    // 한개의 MemberAlarm 을 찾을 때 사용된다.
+    public List<MemberAlarm> findByMemberAndAlarm(Member member, Alarm alarm){
+        return em.createQuery("select m from MemberAlarm m where m.member = :member and m.alarm = :alarm", MemberAlarm.class)
+                .setParameter("member", member)
+                .setParameter("alarm", alarm)
+                .getResultList();
+    }
+
     public List<MemberAlarm> findAll() {
         return em.createQuery("select m from MemberAlarm m", MemberAlarm.class)
                 .getResultList();
+    }
+
+    public boolean existsByMember(Member member){
+        return em.createQuery("select count(m) from MemberAlarm m where m.member = :member", Long.class)
+                .setParameter("member", member)
+                .getSingleResult() > 0; // 0보다 클 경우 true
+    }
+
+    public void removeByMemberAndAlarm(Member member, Alarm alarm){
+        em.remove(findByMemberAndAlarm(member, alarm));
+    }
+
+    public void removeByMemberAndAlarmList(Member member, List<Alarm> alarmList){
+
     }
 
 

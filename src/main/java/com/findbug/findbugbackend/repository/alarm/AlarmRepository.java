@@ -27,6 +27,8 @@ public class AlarmRepository {
         return em.find(Alarm.class, id);
     }
 
+    public void removeById(final Long id){ em.remove(em.find(Alarm.class, id)); }
+
     public List<Alarm> findAll() {
         return em.createQuery("select a from Alarm a", Alarm.class)
                 .getResultList();

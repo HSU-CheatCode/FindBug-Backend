@@ -31,14 +31,14 @@ public class DetectedBug {
     @JoinColumn(name = "alarm_id")
     private Alarm alarm;
 
-    private LocalDateTime detected_date;
+    private LocalDateTime detectedDate;
     private int count;
 
     public static DetectedBug createDetectedBug(Bug bug, Alarm alarm, LocalDateTime detected_date, int count) {
         return builder()
                 .bug(bug)
                 .alarm(alarm)
-                .detected_date(detected_date)
+                .detectedDate(detected_date)
                 .count(count)
                 .build();
     }
