@@ -1,6 +1,6 @@
-package com.findbug.findbugbackend.domain.camera;
+package com.findbug.findbugbackend.domain.member;
 
-import com.findbug.findbugbackend.domain.member.Member;
+import com.findbug.findbugbackend.domain.camera.Camera;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

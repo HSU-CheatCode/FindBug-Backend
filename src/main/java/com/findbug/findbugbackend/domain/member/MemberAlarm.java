@@ -1,6 +1,6 @@
-package com.findbug.findbugbackend.domain.alarm;
+package com.findbug.findbugbackend.domain.member;
 
-import com.findbug.findbugbackend.domain.member.Member;
+import com.findbug.findbugbackend.domain.alarm.Alarm;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
-
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
