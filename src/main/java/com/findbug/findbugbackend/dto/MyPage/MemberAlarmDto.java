@@ -1,4 +1,4 @@
-package com.findbug.findbugbackend.dto.alarm;
+package com.findbug.findbugbackend.dto.MyPage;
 
 import lombok.Getter;
 import lombok.Setter;

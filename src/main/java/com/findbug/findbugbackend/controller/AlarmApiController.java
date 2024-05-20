@@ -1,18 +1,12 @@
 package com.findbug.findbugbackend.controller;
 
 
-import com.findbug.findbugbackend.domain.alarm.Alarm;
-import com.findbug.findbugbackend.domain.member.MemberAlarm;
-import com.findbug.findbugbackend.dto.alarm.AlarmDto;
-import com.findbug.findbugbackend.dto.alarm.AlarmPageDto;
+import com.findbug.findbugbackend.dto.MyPage.AlarmPageDto;
 import com.findbug.findbugbackend.service.AlarmService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @Slf4j
@@ -22,9 +16,14 @@ public class AlarmApiController {
 
     private final AlarmService alarmService;
 
-    // 벌레 발견 여부 조회
+    /**
+     * 메인페이지 / 벌레 발견 팝업
+     * 벌레 발견 여부 전송
+     * @param userId - 사용자 아이디를 받아서 벌레 발견 여부 확인
+     * @return boolean - 발견시 true, else false
+     */
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("alarm/{userId}")
+    @GetMapping("myPage/{userId}/alarms")
     public boolean getBugExists(@PathVariable Long userId) {
         return true;
     }
