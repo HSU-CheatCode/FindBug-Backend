@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class CameraApiController {
+public class LoginApi {
 
-    // 카메라 등록 (MQTT Protocol)
+    /**
+     *
+     */
 
     // 카메라 수정
 

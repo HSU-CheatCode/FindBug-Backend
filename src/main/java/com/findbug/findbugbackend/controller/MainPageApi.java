@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class MemberAPIController {
+public class MainPageApi {
 
     // 로그인
 

@@ -11,6 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "detected_bug")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder

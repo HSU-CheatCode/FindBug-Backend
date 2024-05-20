@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-public class InfoApiController {
+public class MyShopPageApi {
 
     /**
      * 메인 페이지 Api
