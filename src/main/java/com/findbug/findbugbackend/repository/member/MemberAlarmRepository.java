@@ -41,6 +41,12 @@ public class MemberAlarmRepository {
                 .getResultList();
     }
 
+    public List<MemberAlarm> findNonCheckedAlarm(Member member){
+        return em.createQuery("select m from MemberAlarm m where m.isChecked = :false", MemberAlarm.class)
+                .setParameter("false", false)
+                .getResultList();
+    }
+
     // 한개의 MemberAlarm 을 찾을 때 사용된다.
     public List<MemberAlarm> findByMemberAndAlarm(Member member, Alarm alarm){
         return em.createQuery("select m from MemberAlarm m where m.member = :member and m.alarm = :alarm", MemberAlarm.class)

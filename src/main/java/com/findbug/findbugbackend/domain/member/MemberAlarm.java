@@ -29,6 +29,13 @@ public class MemberAlarm {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private boolean isChecked;
+
+
+    public void checkAlarm(){
+        this.isChecked = true;
+    }
+
     public static MemberAlarm createMemberAlarm(Alarm alarm, Member member) {
         return builder()
                 .alarm(alarm)
