@@ -25,6 +25,7 @@ public class BugInformation {
     private Bug bug;
 
     private String image;
+    private String title;
     private String description;
 
     public static BugInformation createBugInformation(Bug bug, String image, String description) {

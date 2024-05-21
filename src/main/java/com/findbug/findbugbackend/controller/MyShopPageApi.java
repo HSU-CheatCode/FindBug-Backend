@@ -1,10 +1,14 @@
 package com.findbug.findbugbackend.controller;
 
 
+import com.findbug.findbugbackend.domain.bug.Bug;
+import com.findbug.findbugbackend.domain.bug.BugInformation;
 import com.findbug.findbugbackend.domain.bug.DetectedBug;
-import com.findbug.findbugbackend.domain.member.Member;
-import com.findbug.findbugbackend.domain.member.MemberAlarm;
+import com.findbug.findbugbackend.dto.shopPage.BugInfoDto;
+import com.findbug.findbugbackend.dto.shopPage.DetectedBugInfoDto;
+import com.findbug.findbugbackend.dto.shopPage.ShopPageDto;
 import com.findbug.findbugbackend.service.AlarmService;
+import com.findbug.findbugbackend.service.BugService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,47 +26,61 @@ import java.util.List;
 public class MyShopPageApi {
 
     private final AlarmService alarmService;
+    private final BugService bugService;
 
     /**
-     * 나의 가게 Page API
-     * @request  - 없음
-     * @response - 벌레 발견시간 및 예방 정보
-     *
+     * 나의 가게 API
+     * @param id 사용자 ID
+     * @return {@link ShopPageDto} 반환
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("myShop/{userId}")
-    public void getBugInformation(@PathVariable("userId") Long id){
+    public ShopPageDto getBugInformation(@PathVariable("userId") Long id) {
 
-        // 벌레 탐지 여부 확인 - memberAlarms 확인
-        // if (벌레 탐지) -> Bug 벌레 정보와 Alarm 벌레 탐지 정보 제공
-        Bug
+        // DetectedBug 내에 DetectedDate와 Bug 정보가 모두 존재한다.
+        DetectedBug detectedBug = bugService.getFirstDetectedBug(id);
 
-        if(!memberAlarms.isEmpty()){
+        if (!(detectedBug == null)) {
 
-            MemberAlarm displayAlarm = memberAlarms.get(0);
+            // top(Img, Title, Description)
+            Bug recentDetectedBug = detectedBug.getBug();
+            BugInfoDto topInfoDto = BugInfoDto.builder()
+                    .Image(recentDetectedBug.getImage())
+                    .Title(recentDetectedBug.getTitle())
+                    .Description(recentDetectedBug.getDescription())
+                    .build();
 
-            // top
+            // detectedInfo (Date, CamaraName)
+            DetectedBugInfoDto detectedInfoDto = DetectedBugInfoDto.builder()
+                    .detectedDate(detectedBug.getDetectedDate())
+                    .cameraName("camera 1")
+                    .build();
 
-            // member를 통해서 첫번째 벌레를 찾는 레포지토리가 필요해 보인다.
-            DetectedBug displayBug = displayAlarm.getAlarm().getDetectedBugs().get(0);
+            // List<(Img, Title, Description)>
+            List<BugInformation> bugInformationList = bugService.getDetailBugInfo(recentDetectedBug);
+            List<BugInfoDto> bugInfoDtoList = new ArrayList<>();
 
+            for (BugInformation bugInformation : bugInformationList) {
+                bugInfoDtoList.add(BugInfoDto.builder()
+                        .Image(bugInformation.getImage())
+                        .Title(bugInformation.getTitle())
+                        .Description(bugInformation.getDescription())
+                        .build()
+                );
+            }
 
-            // detected
-
-
-
-            // member
-
-        }else{
-
+            return ShopPageDto.builder()
+                    .topInfo(topInfoDto)
+                    .detectedInfo(detectedInfoDto)
+                    .detailInfo(bugInfoDtoList)
+                    .build();
         }
         // else -> 기본 바퀴벌레 값 제공
-
-
+        return ShopPageDto.builder()
+                .topInfo(null)
+                .detailInfo(null)
+                .detailInfo(null)
+                .build();
 
     }
-
-
-
-
 }

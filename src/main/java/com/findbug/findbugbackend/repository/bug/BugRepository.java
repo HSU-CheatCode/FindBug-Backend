@@ -39,7 +39,6 @@ public class BugRepository {
         query.setParameter("memberId", memberId);
         query.setMaxResults(1);
         return query.getSingleResult();
-
     }
 
     public List<Bug> findAll() {

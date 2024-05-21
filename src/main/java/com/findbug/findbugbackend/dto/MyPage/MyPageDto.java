@@ -22,6 +22,6 @@ import java.util.List;
 @Jacksonized
 @Getter
 @Setter
-public class AlarmPageDto {
+public class MyPageDto {
     public List<AlarmDto> alarmList;
 }

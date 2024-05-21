@@ -2,6 +2,7 @@ package com.findbug.findbugbackend.repository.alarm;
 
 import com.findbug.findbugbackend.domain.alarm.Alarm;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;

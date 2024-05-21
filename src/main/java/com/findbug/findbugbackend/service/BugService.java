@@ -2,8 +2,10 @@ package com.findbug.findbugbackend.service;
 
 import com.findbug.findbugbackend.domain.bug.Bug;
 import com.findbug.findbugbackend.domain.bug.BugInformation;
+import com.findbug.findbugbackend.domain.bug.DetectedBug;
 import com.findbug.findbugbackend.repository.bug.BugInfoRepository;
 import com.findbug.findbugbackend.repository.bug.BugRepository;
+import com.findbug.findbugbackend.repository.bug.DetectedBugRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.List;
 public class BugService {
 
     private final BugRepository bugRepository;
+    private final DetectedBugRepository detectedBugRepository;
     private final BugInfoRepository bugInfoRepository;
 
     /**
@@ -37,4 +40,24 @@ public class BugService {
     public List<BugInformation> getDetailBugInfo(Bug bug) {
         return bugInfoRepository.findByBug(bug);
     }
+
+
+    /**
+     * 최근 감지 단일 {@link Bug} 정보 조회 - 최근 감지된 벌레 정보(한마리)를 조회한다.
+     * @param userId 사용자 id로 조회한다.
+     * @return {@link Bug} 객체를 반환한다.
+     */
+    public Bug getFirstBug(Long userId){
+        return bugRepository.findFirstBugsByMemberId(userId);
+    }
+
+    /**
+     * 최근 감지 단일 {@link DetectedBug} - 최근 감지된 상세 벌레 정보를 조회한다.
+     * @param memberId 사용자 id로 조회한다.
+     * @return {@link DetectedBug} 객체를 반환한다
+     */
+    public DetectedBug getFirstDetectedBug(Long memberId){
+        return detectedBugRepository.findFirstDetectedBugByMember(memberId);
+    }
+
 }

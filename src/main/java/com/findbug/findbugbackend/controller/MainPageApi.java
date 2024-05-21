@@ -14,36 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class MainPageApi {
 
     /**
-     * 메인 페이지 Api
-     * 이벤트 팝업 등 다양한 이미지를 제공한다.
-     *
+     * 메인페이지 - 메인 페이지 정보 제공 및 팝업 정보 제공
+     * @param userId
      */
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("main")
-    public void getMainPageInformation(){
+    @GetMapping("main/{userId}/")
+    public void getMainPage(@PathVariable("userId") Long userId){
 
     }
 
-    /**
-     * 마이페이지-메인 / 프로필 Api
-     *
-     * 사용자의 프로필, 이름, 로그인 상태를 보여준다
-     * 이름은 처음에 임의로 지정하여 제공한다.
-     *
-     * @param id
-     */
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("myPage/{userId}/profile")
-    public void getUserProfile(@PathVariable("userId") Long id){
-
-    }
-
-
-    // 로그인
-
-    // 로그인 - OAuth2
-
-    // 회원가입
-
-    // 회원수정
 }
