@@ -33,14 +33,16 @@ public class DetectedBugRepository {
     /**
      * 최신 발견 벌레 단일 조회 - 최근 발견된 벌레 중 하나를 단일 조회 한다.
      * @param memberId 조회를 위한 사용자 Id
-     * @return {@link DetectedBug} 발견된 단일 최신 벌레 정보를 반환한다.
+     * @return {@link DetectedBug} 반환 Bug fetch joined
      */
     public DetectedBug findFirstDetectedBugByMember(Long memberId){
-        String jpql = "SELECT db FROM DetectedBug db "+
+        String jpql = "SELECT db FROM DetectedBug db " +
+                "JOIN FETCH db.bug " +
                 "JOIN db.alarm a " +
                 "JOIN MemberAlarm ma ON ma.alarm = a " +
                 "WHERE ma.member.id = :memberId " +
                 "ORDER BY db.id ASC";
+
         return em.createQuery(jpql, DetectedBug.class)
                 .setParameter("memberId", memberId)
                 .setMaxResults(1)
