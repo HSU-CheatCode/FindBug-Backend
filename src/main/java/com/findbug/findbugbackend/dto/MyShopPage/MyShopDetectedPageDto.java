@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 public class MyShopDetectedPageDto {
-    public InfoDto BugInfoDto;
+    public InfoDto bugInfoDto;
     public DetectedInfoDto alarmInfoDto;
     public List<InfoDto> detectedInfoDtoList;
 }

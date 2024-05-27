@@ -33,6 +33,7 @@ public class Camera {
                 .type(type)
                 .IMEI(IMEI)
                 .name(name)
+                .description(description)
                 .build();
     }
 }

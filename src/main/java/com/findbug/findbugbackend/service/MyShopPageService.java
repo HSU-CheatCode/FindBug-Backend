@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -36,8 +37,10 @@ public class MyShopPageService {
 
     public Boolean getMyShopStatus(Long memberId){
         //check 7 day have passed
-        LocalDateTime recentDetectedTime = alarmRepository.findLocalDateTimeByMemberId(memberId);
-        return Duration.between(recentDetectedTime, LocalDateTime.now()).toDays() >= 7;
+        LocalDateTime recentDetectedTime = alarmRepository.findRecentDetectedTimeByMemberId(memberId);
+        log.info("recentDetectedTime={}", recentDetectedTime);
+        // true - 미탐지 , false - 탐지
+        return Duration.between(recentDetectedTime, LocalDateTime.now()).toDays() < 7;
     }
 
     public MyShopPredictPageDto getPredictPage(){
@@ -81,16 +84,35 @@ public class MyShopPageService {
     public MyShopDetectedPageDto getDetectedPage(Long memberId){
         //repository
         Alarm recentAlarm = alarmRepository.findRecentAlarmByMemberId(memberId);
+        log.info("recentAlarmId = {}", recentAlarm.getId());
         List<DetectedBug> detectedBugList = recentAlarm.getDetectedBugs();  // List.isEmpty() 검증 코드 추가 필요
-        Bug bug = detectedBugList.get(0).getBug();
-        List<BugInformation> bugDetectedInfoDtoList = bugInfoRepository.findByBugAndType(bug, BugInfoType.EXTERMINATE);
+        Bug bug = null;
+        if (!detectedBugList.isEmpty()) {
+            bug = detectedBugList.get(0).getBug();
+        }
 
-        //create BugInfoDto
-        InfoDto bugInfoDto = InfoDto.builder()
-                .imageUrl(bug.getImage())
-                .title(bug.getTitle())
-                .description(bug.getDescription())
-                .build();
+        List<BugInformation> bugDetectedInfoDtoList = new ArrayList<>();
+        if (bug != null) {
+            bugDetectedInfoDtoList = bugInfoRepository.findByBugAndType(bug, BugInfoType.EXTERMINATE);
+        }
+
+        InfoDto bugInfoDto;
+        if(bug == null){
+            Bug alterBug = bugRepository.findById(1L);
+            bugInfoDto = InfoDto.builder()
+                    .imageUrl(alterBug.getImage())
+                    .title(alterBug.getTitle())
+                    .description(alterBug.getDescription())
+                    .build();
+        }else{
+            bugInfoDto = InfoDto.builder()
+                    .imageUrl(bug.getImage())
+                    .title(bug.getTitle())
+                    .description(bug.getDescription())
+                    .build();
+        }
+
+
 
         //create DetectedInfo
         DetectedInfoDto detectedInfoDto = DetectedInfoDto.builder()
@@ -108,7 +130,7 @@ public class MyShopPageService {
                 .collect(Collectors.toList());
 
         return MyShopDetectedPageDto.builder()
-                .BugInfoDto(bugInfoDto)
+                .bugInfoDto(bugInfoDto)
                 .alarmInfoDto(detectedInfoDto)
                 .detectedInfoDtoList(detectedInfoDtoList)
                 .build();

@@ -12,5 +12,5 @@ import lombok.extern.jackson.Jacksonized;
 public class MyPageProfileDto {
     public String imageUrl;
     public String name;
-    public String LoginType;
+    public String loginType;
 }

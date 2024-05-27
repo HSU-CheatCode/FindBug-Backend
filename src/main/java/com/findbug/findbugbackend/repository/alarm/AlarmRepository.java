@@ -24,20 +24,15 @@ public class AlarmRepository {
         }
     }
 
-    public Alarm findById(final Long id) {
-        return em.find(Alarm.class, id);
-    }
-
-    public void removeById(final Long id){ em.remove(em.find(Alarm.class, id)); }
-
-    public List<Alarm> findAll() {
-        return em.createQuery("select a from Alarm a", Alarm.class)
-                .getResultList();
-    }
-
+    /**
+     * 1. 알람 레포지토리 - 최신 알람 조회
+     * Camera Fetch joined
+     * @param memberId
+     * @return {@link Alarm}
+     */
     public Alarm findRecentAlarmByMemberId(final Long memberId) {
         return em.createQuery("select a from Alarm a " +
-                        "join fetch Camera " +
+                        "join fetch a.camera c " +
                         "join MemberAlarm ma on a.id = ma.alarm.id " +
                         "where ma.member.id = :memberId " +
                         "order by a.createAt desc", Alarm.class)
@@ -46,16 +41,26 @@ public class AlarmRepository {
                 .getSingleResult();
     }
 
+    /**
+     * 2. 알람 레포지토리 - 사용자 ID를 이용한 알람 리스트 조회
+     * @param memberId
+     * @return
+     */
     public List<Alarm> findByMemberId(final Long memberId) {
         return em.createQuery("select a from Alarm a " +
-                        "join fetch Camera " +
+                        "join fetch a.camera c " +
                         "join MemberAlarm ma on a.id = ma.alarm.id " +
                         "where ma.member.id = :memberId", Alarm.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
 
-    public LocalDateTime findLocalDateTimeByMemberId(final Long memberId){
+    /**
+     * 3. 알람 레포지토리 - 사용자 ID를 이용한 최신 탐지 시간 확인
+     * @param memberId
+     * @return
+     */
+    public LocalDateTime findRecentDetectedTimeByMemberId(final Long memberId){
         return em.createQuery("select a.createAt from Alarm a " +
                         "join MemberAlarm ma on a.id = ma.alarm.id " +
                         "where ma.member.id = :memberId " +

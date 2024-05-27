@@ -6,6 +6,8 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+import java.time.LocalDateTime;
+
 @SuperBuilder(toBuilder = true)
 @Jacksonized
 @Getter
@@ -13,7 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 public class MyPageAlarmDto {
     public Long alarmId;
     public String imageUrl;
-    public String createAt;
+    LocalDateTime createAt;
     public String bugName;
     public String cameraName;
 }

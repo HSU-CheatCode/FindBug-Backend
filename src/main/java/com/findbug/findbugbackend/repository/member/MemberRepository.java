@@ -24,6 +24,14 @@ public class MemberRepository {
         }
     }
 
+    // 소셜 로그인으로 반환되는 값 중 email을 통해 중복 검사 진행
+    public Member findByEmail(String email){
+        return em.createQuery("select m from Member m where m.email = :email", Member.class)
+                .setParameter("email", email)
+                .setMaxResults(1)
+                .getSingleResult();
+    }
+
     public Member findById(Long id){
         return em.find(Member.class, id);
     }

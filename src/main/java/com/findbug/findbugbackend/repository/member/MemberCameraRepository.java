@@ -30,10 +30,10 @@ public class MemberCameraRepository {
         return em.find(MemberCamera.class, id);
     }
 
-    public List<MemberCamera> findByCamera(final Camera camera) {
-        return em.createQuery("select m from MemberCamera m where m.camera = :camera", MemberCamera.class)
+    public Boolean existByCamera(final Camera camera) {
+        return em.createQuery("select case when count(m) > 0 then true else false end from MemberCamera m where m.camera = :camera", Boolean.class)
                 .setParameter("camera", camera)
-                .getResultList();
+                .getSingleResult();
     }
 
     public List<MemberCamera> findByMember(final Member member){

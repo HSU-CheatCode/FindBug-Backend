@@ -34,7 +34,7 @@ public class Alarm {
     private Camera camera;
 
     @OneToMany(mappedBy = "alarm")
-    private List<DetectedBug> detectedBugs = new ArrayList<>();
+    private List<DetectedBug> detectedBugs;
 
     private String imageUrl;
 

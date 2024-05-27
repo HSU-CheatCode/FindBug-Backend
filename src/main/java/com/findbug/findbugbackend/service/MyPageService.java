@@ -1,6 +1,7 @@
 package com.findbug.findbugbackend.service;
 
 
+import com.findbug.findbugbackend.domain.bug.DetectedBug;
 import com.findbug.findbugbackend.domain.camera.Camera;
 import com.findbug.findbugbackend.domain.member.Member;
 import com.findbug.findbugbackend.domain.member.MemberCamera;
@@ -34,18 +35,29 @@ public class MyPageService {
         return MyPageProfileDto.builder()
                 .name(member.getName())
                 .imageUrl(member.getImageUrl())
-                .LoginType("일반 로그인 상태")
+                .loginType("카카오 로그인")
                 .build();
     }
 
     public MyPageAlarmListDto getAlarmList(Long memberId){
         List<MyPageAlarmDto> alarmListDto = alarmRepository.findByMemberId(memberId).stream()
-                .map(alarm -> MyPageAlarmDto.builder()
-                        .alarmId(alarm.getId())
-                        .imageUrl(alarm.getImageUrl())
-                        .bugName(alarm.getDetectedBugs().get(0).getBug().getName())
-                        .cameraName(alarm.getCamera().getName())
-                        .build())
+                .map(alarm -> {
+                    DetectedBug detectedBug = alarm.getDetectedBugs().isEmpty() ? null : alarm.getDetectedBugs().get(0);
+                    log.info("alarm id = {}", alarm.getId());
+                    log.info("detectedBug size = {}", alarm.getDetectedBugs().size());
+                    log.info("detectedBug getId = {}", detectedBug.getId());
+                    log.info("detectedBug getId = {}", detectedBug.getBug());
+                    log.info("detectedBug getId = {}", detectedBug.getBug().getId());
+                    log.info("detectedBug getId.getBug ={}", detectedBug.getBug().getName());
+                    String bugName = detectedBug != null ? detectedBug.getBug().getName() : null;
+                    return MyPageAlarmDto.builder()
+                            .alarmId(alarm.getId())
+                            .imageUrl(alarm.getImageUrl())
+                            .bugName(bugName)
+                            .createAt(alarm.getCreateAt())
+                            .cameraName(alarm.getCamera().getName())
+                            .build();
+                })
                 .collect(Collectors.toList());
 
         return MyPageAlarmListDto.builder()
@@ -55,27 +67,32 @@ public class MyPageService {
 
     @Transactional
     public MyPageCameraResponseDto joinCamera(Long memberId, MyPageCameraRequestDto myPageCameraRequestDto) {
+
         Member member = memberRepository.findById(memberId);
 
         Camera camera = Camera.createCamera(
                 myPageCameraRequestDto.getCameraType(),
-                myPageCameraRequestDto.getIMEI(),
+                myPageCameraRequestDto.getImei(),
                 myPageCameraRequestDto.getName(),
                 myPageCameraRequestDto.getDescription()
         );
-        
-        List<Camera> validationCamera = cameraRepository.findByIMEI(myPageCameraRequestDto.getIMEI());  // 검증 필요
-        List<MemberCamera> validationMemberCamera = memberCameraRepository.findByCamera(validationCamera.get(0));
-        
-        if(validationCamera.isEmpty()){
+
+        Boolean isCameraSaved = cameraRepository.existByIMEI(camera.getIMEI());
+        log.info("exist = {}", isCameraSaved);
+        // 검증 필요
+
+        if(!isCameraSaved){
             // Camera가 등록되지 아니한 경우
             return UpdateCamera(camera, member);
-        }else if(memberCameraRepository.findByCamera(validationCamera.get(0)).isEmpty()){
-            // Camera는 등록되었으나, memberCamera에 등록되지 아니한 경우
-            return UpdateCamera(validationCamera.get(0), member);
         }else{
-            // Camera와 memberCamera 모두 등록된 경우
-            return new MyPageCameraResponseDto(false);
+            Camera savedCamera = cameraRepository.findByIMEI(camera.getIMEI());
+            Boolean isMemberCameraSaved = memberCameraRepository.existByCamera(savedCamera);
+            if(!isMemberCameraSaved){
+                return UpdateCamera(savedCamera, member);
+            }
+            else{
+                return new MyPageCameraResponseDto(false);
+            }
         }
     }
 
@@ -99,6 +116,7 @@ public class MyPageService {
                 .build();
     }
 
+    @Transactional
     public MyPageMemberResponseDto updateMember(Long memberId, MyPageMemberInformationDto myPageMemberInformationDto) {
         Member member = memberRepository.findById(memberId);
 
@@ -112,6 +130,8 @@ public class MyPageService {
                 myPageMemberInformationDto.getEmail(),
                 myPageMemberInformationDto.getPhone()
         ); // 추후 Company Update 추가할 것   //Dirty Check
+
+        memberRepository.save(member);
 
         return new MyPageMemberResponseDto(true);
     }

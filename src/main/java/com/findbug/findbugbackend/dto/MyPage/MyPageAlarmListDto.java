@@ -14,6 +14,6 @@ import java.util.List;
 @Setter
 public class MyPageAlarmListDto {
 
-    List<MyPageAlarmDto> alarmListDto = new ArrayList<>();
+    List<MyPageAlarmDto> alarmListDto;
 
 }

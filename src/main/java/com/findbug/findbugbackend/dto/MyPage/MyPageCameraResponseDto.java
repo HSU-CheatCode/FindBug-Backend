@@ -12,5 +12,5 @@ import lombok.extern.jackson.Jacksonized;
 @Getter
 @Setter
 public class MyPageCameraResponseDto {
-    public boolean isCreated;
+    public boolean created;
 }

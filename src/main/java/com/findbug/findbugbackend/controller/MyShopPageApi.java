@@ -39,7 +39,7 @@ public class MyShopPageApi {
      * 나의 가게 / 벌레 예방 정보 API
      * 벌레 예방 정보를 제공한다.
      * @param memberId 사용자 ID
-     * @return {@link MyShopPredictPageDto}
+     * @return {@link MyShopPredictPageDto}git
      */
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("myShopPage/{memberId}/predict")

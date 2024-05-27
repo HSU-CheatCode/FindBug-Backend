@@ -17,6 +17,6 @@ public class MainPageDto {
     Boolean isExistCamera;
     Boolean isDetectedBug;
 
-    List<EventDto> eventDtoList = new ArrayList<>();
-    List<InfoDto> infoDtoList = new ArrayList<>();
+    List<EventDto> eventDtoList;
+    List<InfoDto> infoDtoList;
 }

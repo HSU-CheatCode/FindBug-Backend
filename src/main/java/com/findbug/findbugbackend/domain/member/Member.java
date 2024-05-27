@@ -30,10 +30,18 @@ public class Member {
     @JoinColumn(name = "company_id")
     private Company company;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     private String name;
     private String email;
     private String phoneNumber;
     private LocalDateTime registrationDate;
+
+
+    public String getRoleKey(){
+        return role.getKey();
+    }
 
     public static Member createMember(
             String address, Company company, String name, String email, String phoneNumber, LocalDateTime registrationDate) {

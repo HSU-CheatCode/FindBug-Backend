@@ -20,7 +20,7 @@ public class BugInformation {
     @Column(name = "bug_information_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "bug_id")
     private Bug bug;
 

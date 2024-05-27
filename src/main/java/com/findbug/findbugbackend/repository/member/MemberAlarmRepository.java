@@ -24,6 +24,8 @@ public class MemberAlarmRepository {
         }
     }
 
+
+
     public MemberAlarm findById(Long id){
         return em.find(MemberAlarm.class, id);
     }

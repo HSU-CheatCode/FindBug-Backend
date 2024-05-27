@@ -49,7 +49,7 @@ public class MyPageApi {
     @PostMapping("myPage/{memberId}/camera")
     public MyPageCameraResponseDto myPageSetCameraApi(
             @PathVariable("memberId") Long memberId,
-            @ModelAttribute MyPageCameraRequestDto myPageCameraRequestDto) {
+            @RequestBody MyPageCameraRequestDto myPageCameraRequestDto) {
         return myPageService.joinCamera(memberId, myPageCameraRequestDto);
     }
 
@@ -76,7 +76,7 @@ public class MyPageApi {
     @PutMapping("myPage/{memberId}/info")
     public MyPageMemberResponseDto myPageUpdateMemberApi(
             @PathVariable("memberId") Long memberId,
-            @ModelAttribute MyPageMemberInformationDto myPageMemberInformationDto) {
+            @RequestBody MyPageMemberInformationDto myPageMemberInformationDto) {
         return myPageService.updateMember(memberId, myPageMemberInformationDto);
     }
 
