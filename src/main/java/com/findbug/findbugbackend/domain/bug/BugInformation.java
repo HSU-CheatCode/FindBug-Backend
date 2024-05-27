@@ -24,13 +24,18 @@ public class BugInformation {
     @JoinColumn(name = "bug_id")
     private Bug bug;
 
+
+    @Enumerated(EnumType.STRING)
+    private BugInfoType type;
+
     private String image;
     private String title;
     private String description;
 
-    public static BugInformation createBugInformation(Bug bug, String image, String description) {
+    public static BugInformation createBugInformation(Bug bug, String image, BugInfoType type, String description) {
         return builder()
                 .bug(bug)
+                .type(type)
                 .image(image)
                 .description(description)
                 .build();

@@ -2,6 +2,7 @@ package com.findbug.findbugbackend.repository.bug;
 
 
 import com.findbug.findbugbackend.domain.bug.Bug;
+import com.findbug.findbugbackend.domain.bug.BugInfoType;
 import com.findbug.findbugbackend.domain.bug.BugInformation;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,13 @@ public class BugInfoRepository {
     public List<BugInformation> findByBug(Bug bug){
         return em.createQuery("select b from BugInformation b where b.bug = :bug", BugInformation.class)
                 .setParameter("bug", bug)
+                .getResultList();
+    }
+
+    public List<BugInformation> findByBugAndType(Bug bug, BugInfoType type){
+        return em.createQuery("select b from BugInformation b where b.bug = :bug and b.type = :type", BugInformation.class)
+                .setParameter("bug", bug)
+                .setParameter("type", type)
                 .getResultList();
     }
 

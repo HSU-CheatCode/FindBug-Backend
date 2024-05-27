@@ -20,14 +20,11 @@ public class Bug {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bug_id")
     private Long id;
+    private String name;
+    //해당 정보는 차후 BugInformation 에서 관리할 것
     private String image;
     private String title;
     private String description;
 
-    public static Bug createBug(String image, String description) {
-        return builder()
-                .image(image)
-                .description(description)
-                .build();
-    }
+
 }

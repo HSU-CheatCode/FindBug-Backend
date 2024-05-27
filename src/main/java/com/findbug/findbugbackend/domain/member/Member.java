@@ -23,8 +23,8 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Embedded
-    private Address address;
+    private String address;
+    private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -36,7 +36,7 @@ public class Member {
     private LocalDateTime registrationDate;
 
     public static Member createMember(
-            Address address, Company company, String name, String email, String phoneNumber, LocalDateTime registrationDate) {
+            String address, Company company, String name, String email, String phoneNumber, LocalDateTime registrationDate) {
         return builder()
                 .address(address)
                 .company(company)
@@ -47,7 +47,7 @@ public class Member {
                 .build();
     }
 
-    public void updateMember(Address address, Company company, String name, String email, String phoneNumber) {
+    public void updateMember(String address, Company company, String name, String email, String phoneNumber) {
         this.address = address;
         this.company = company;
         this.name = name;

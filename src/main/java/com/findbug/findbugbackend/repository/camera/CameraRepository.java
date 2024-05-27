@@ -27,6 +27,12 @@ public class CameraRepository {
         return em.find(Camera.class, id);
     }
 
+    public List<Camera> findByIMEI(final String imei) {
+        return em.createQuery("select c from Camera c where c.IMEI = :IMEI", Camera.class)
+                .setParameter("IMEI", imei)
+                .getResultList();
+    }
+
     public List<Camera> findAll() {
         return em.createQuery("from Camera", Camera.class)
                 .getResultList();

@@ -33,7 +33,7 @@ public class MemberCamera {
 
     private LocalDateTime registrationDate;
 
-    public static MemberCamera setMemberCamera(
+    public static MemberCamera createMemberCamera(
             Camera camera, Member member, LocalDateTime registrationDate){
         return builder()
                 .camera(camera)

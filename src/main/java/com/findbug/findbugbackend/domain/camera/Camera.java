@@ -24,15 +24,14 @@ public class Camera {
     @Enumerated(EnumType.STRING)
     private CameraType type;
 
-    @Enumerated(EnumType.STRING)
-    private CameraSoftwareVersion softwareVersion;
-
+    private String IMEI;
     private String name;
+    private String description;
 
-    public static Camera createCamera(CameraType type, CameraSoftwareVersion softwareVersion, String name) {
+    public static Camera createCamera(CameraType type, String IMEI, String name, String description) {
         return builder()
                 .type(type)
-                .softwareVersion(softwareVersion)
+                .IMEI(IMEI)
                 .name(name)
                 .build();
     }

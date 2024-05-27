@@ -1,8 +1,8 @@
 package com.findbug.findbugbackend.controller;
 
 
-import com.findbug.findbugbackend.dto.MyPage.MyPageDto;
-import com.findbug.findbugbackend.service.AlarmService;
+import com.findbug.findbugbackend.dto.MyPage.*;
+import com.findbug.findbugbackend.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,38 +13,71 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class MyPageApi {
 
-
-    private final AlarmService alarmService;
-
+    private final MyPageService myPageService;
 
     /**
-     * 마이페이지/알람조회 - 사용자의 벌레 탐지 알람 리스트를 조회한다.
-     * @param userId
-     * @return {@link MyPageDto}
+     * 마이페이지 / 프로필 페이지
+     * 본인의 프로필을 간략하게 확인한다.
+     * @param memberId - 사용자 ID
+     * @return
      */
-    @GetMapping("myPage/{userId}/alarmList")
-    public MyPageDto getAlarmList(
-            @PathVariable("userId") Long userId){
-
-        return MyPageDto.builder()
-                .build();
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("myPage/{memberId}")
+    public MyPageProfileDto myPageGetProfileApi(@PathVariable("memberId") Long memberId) {
+        return myPageService.getProfile(memberId);
     }
 
     /**
-     * 마이페이지/카메라등록 - 사용자가 사용할 카메라를 등록한다.
+     * 마이페이지 / 벌레 감지 알람 페이지
+     * 감지된 벌레 발견 정보를 조회한다.
+     * @param memberId - 사용자 ID
+     * @return {@link MyPageAlarmListDto}
      */
-    @PostMapping("myPage/{userId}/setCamera")
-    public void setCamera(){
-
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("myPage/{memberId}/alarms")
+    public MyPageAlarmListDto myPageGetAlarmApi(@PathVariable("memberId") Long memberId) {
+        return myPageService.getAlarmList(memberId);
     }
 
-    // 2차 MVP
+    /**
+     * 마이페이지 / 카메라 등록
+     * 카메라를 등록한다.
+     * @param {@link MyPageCameraRequestDto}
+     * @return {@link MyPageCameraResponseDto} true - 성공 / false - 실패
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("myPage/{memberId}/camera")
+    public MyPageCameraResponseDto myPageSetCameraApi(
+            @PathVariable("memberId") Long memberId,
+            @ModelAttribute MyPageCameraRequestDto myPageCameraRequestDto) {
+        return myPageService.joinCamera(memberId, myPageCameraRequestDto);
+    }
 
-//    // 벌레 알람 단일 내용 삭제
-//    @PostMapping("alarm/{userId}/delete/{alarmId}")
-//    public String deleteAlarm(
-//            @PathVariable("userId") Long userId, @PathVariable String alarmId) {
-//        return "ok";
-//    }
+    /**
+     * 마이페이지 / 회원 정보 수정 페이지 / 회원 정보 조회
+     * 사전에 회원 정보를 조회에서 입력한다.
+     * @param memberId - 사용자 ID
+     * @return {@link MyPageMemberResponseDto}
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("myPage/{memberId}/info")
+    public MyPageMemberInformationDto myPageGetMemberInfoApi(@PathVariable("memberId") Long memberId) {
+        return myPageService.getMemberInfo(memberId);
+    }
+
+
+    /**
+     * 마이페이지 / 회원 정보 수정
+     * 회원 정보를 수정한다.
+     * @param memberId - 사용자 ID
+     * @return {@link MyPageMemberResponseDto} true - 성공 / false - 실패
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("myPage/{memberId}/info")
+    public MyPageMemberResponseDto myPageUpdateMemberApi(
+            @PathVariable("memberId") Long memberId,
+            @ModelAttribute MyPageMemberInformationDto myPageMemberInformationDto) {
+        return myPageService.updateMember(memberId, myPageMemberInformationDto);
+    }
 
 }

@@ -34,9 +34,17 @@ public class MemberAlarmRepository {
                 .getResultList();
     }
 
-    // Member 가 소유한 모든 탐지내역 을 반환한다.
+    /**
+     * 멤버 알람 리스트 조회
+     * @param member 멤버 객체를 받는다.
+     * @return {@link MemberAlarm}을 반환한다. {@link Alarm}을 fetch join 한다.
+     */
     public List<MemberAlarm> findByMember(Member member){
-        return em.createQuery("select m from MemberAlarm m where m.member = :member", MemberAlarm.class)
+        String jpql = "SELECT ma FROM MemberAlarm ma " +
+                "JOIN FETCH ma.alarm a " +
+                "WHERE ma.member = :member";
+
+        return em.createQuery(jpql, MemberAlarm.class)
                 .setParameter("member", member)
                 .getResultList();
     }

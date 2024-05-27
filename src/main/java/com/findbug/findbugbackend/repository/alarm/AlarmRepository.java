@@ -2,11 +2,11 @@ package com.findbug.findbugbackend.repository.alarm;
 
 import com.findbug.findbugbackend.domain.alarm.Alarm;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -33,5 +33,35 @@ public class AlarmRepository {
     public List<Alarm> findAll() {
         return em.createQuery("select a from Alarm a", Alarm.class)
                 .getResultList();
+    }
+
+    public Alarm findRecentAlarmByMemberId(final Long memberId) {
+        return em.createQuery("select a from Alarm a " +
+                        "join fetch Camera " +
+                        "join MemberAlarm ma on a.id = ma.alarm.id " +
+                        "where ma.member.id = :memberId " +
+                        "order by a.createAt desc", Alarm.class)
+                .setParameter("memberId", memberId)
+                .setMaxResults(1)
+                .getSingleResult();
+    }
+
+    public List<Alarm> findByMemberId(final Long memberId) {
+        return em.createQuery("select a from Alarm a " +
+                        "join fetch Camera " +
+                        "join MemberAlarm ma on a.id = ma.alarm.id " +
+                        "where ma.member.id = :memberId", Alarm.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
+    public LocalDateTime findLocalDateTimeByMemberId(final Long memberId){
+        return em.createQuery("select a.createAt from Alarm a " +
+                        "join MemberAlarm ma on a.id = ma.alarm.id " +
+                        "where ma.member.id = :memberId " +
+                        "order by a.createAt desc", LocalDateTime.class)
+                .setParameter("memberId", memberId)
+                .setMaxResults(1)
+                .getSingleResult();
     }
 }

@@ -1,5 +1,6 @@
-package com.findbug.findbugbackend.dto.shopPage;
+package com.findbug.findbugbackend.dto.MyShopPage;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
@@ -7,10 +8,9 @@ import lombok.extern.jackson.Jacksonized;
 
 @SuperBuilder(toBuilder = true)
 @Jacksonized
+@AllArgsConstructor
 @Getter
 @Setter
-public class BugInfoDto {
-    public String Title;
-    public String Description;
-    public String Image;
+public class MyShopStatusDto {
+    boolean isDetected;
 }

@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,10 @@ public class Alarm {
 
     @OneToMany(mappedBy = "alarm")
     private List<DetectedBug> detectedBugs = new ArrayList<>();
+
+    private String imageUrl;
+
+    private LocalDateTime createAt;
 
     public static Alarm createAlarm(Camera camera, List<DetectedBug> detectedBugs) {
 
