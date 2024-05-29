@@ -1,10 +1,18 @@
 
+
+# 테스트 설정 yml
+
+server:
+  port: 5000
+  servlet:
+    encoding:
+      charset: utf-8
+
 spring:
   datasource:
-    url: jdbc:h2:tcp://localhost/~/test
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: ${rds.url}
+    username: ${rds.username}
+    password: ${rds.password}
 
   jpa:
     hibernate:
