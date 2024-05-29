@@ -54,27 +54,27 @@ public class AppInitService {
 
         // Alarm Seeding
         Alarm alarm1 = Alarm.builder()
-                .imageUrl("A")
+                .imageUrl("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/bug1.png")
                 .camera(camera)
                 .createAt(LocalDateTime.of(2024, 4, 27, 14, 42, 0))
                 .build();
         Alarm alarm2 = Alarm.builder()
-                .imageUrl("A")
+                .imageUrl("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/bug2.png")
                 .camera(camera)
                 .createAt(LocalDateTime.of(2024, 4, 25, 12, 35, 0))
                 .build();
         Alarm alarm3 = Alarm.builder()
-                .imageUrl("A")
+                .imageUrl("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/bug3.png")
                 .camera(camera)
                 .createAt(LocalDateTime.of(2024, 4, 28, 12, 32, 0))
                 .build();
         Alarm alarm4 = Alarm.builder()
-                .imageUrl("A")
+                .imageUrl("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/bug4.png")
                 .camera(camera)
                 .createAt(LocalDateTime.of(2024, 4, 20, 4, 50, 0))
                 .build();
         Alarm alarm5 = Alarm.builder()
-                .imageUrl("A")
+                .imageUrl("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/bug5.png")
                 .camera(camera)
                 .createAt(LocalDateTime.of(2024, 4, 15, 2, 40, 0))
                 .build();
