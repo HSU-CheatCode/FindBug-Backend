@@ -14,7 +14,6 @@ import com.findbug.findbugbackend.repository.bug.BugInfoRepository;
 import com.findbug.findbugbackend.repository.bug.DetectedBugRepository;
 import com.findbug.findbugbackend.repository.member.MemberAlarmRepository;
 import com.findbug.findbugbackend.repository.member.MemberCameraRepository;
-import com.findbug.findbugbackend.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ import java.time.LocalDateTime;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class InitService {
+public class AppInitService {
 
     private final MemberCameraRepository memberCameraRepository;
     private final MemberAlarmRepository memberAlarmRepository;
