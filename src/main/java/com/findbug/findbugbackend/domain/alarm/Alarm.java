@@ -29,7 +29,7 @@ public class Alarm {
     @Column(name = "alarm_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     @JoinColumn(name = "camera_id")
     private Camera camera;
 

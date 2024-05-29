@@ -1,6 +1,7 @@
 package com.findbug.findbugbackend.repository.member;
 
 
+import com.findbug.findbugbackend.domain.camera.Camera;
 import com.findbug.findbugbackend.domain.member.Member;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -41,4 +42,9 @@ public class MemberRepository {
                 .getResultList();
     }
 
+    public List<Member> findByCamera(Camera camera) {
+        return em.createQuery("select m from Member m join MemberCamera mc where mc.camera = :camera", Member.class)
+                .setParameter("camera", camera)
+                .getResultList();
+    }
 }

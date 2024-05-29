@@ -52,4 +52,5 @@ public class MemberCameraRepository {
         return em.createQuery("select m from MemberCamera m", MemberCamera.class)
                 .getResultList();
     }
+
 }
