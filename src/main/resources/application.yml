@@ -6,9 +6,9 @@ server:
 
 spring:
   datasource:
-    url:
-    username:
-    password:
+    url: jdbc:mysql://localhost:3306/mysql
+    username: root
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
@@ -20,7 +20,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     show-sql: true
     properties:
       hibernate:

@@ -56,27 +56,27 @@ public class AppInitService {
         Alarm alarm1 = Alarm.builder()
                 .imageUrl("A")
                 .camera(camera)
-                .createAt(LocalDateTime.of(2024, 5, 27, 14, 42, 0))
+                .createAt(LocalDateTime.of(2024, 4, 27, 14, 42, 0))
                 .build();
         Alarm alarm2 = Alarm.builder()
                 .imageUrl("A")
                 .camera(camera)
-                .createAt(LocalDateTime.of(2024, 5, 25, 12, 35, 0))
+                .createAt(LocalDateTime.of(2024, 4, 25, 12, 35, 0))
                 .build();
         Alarm alarm3 = Alarm.builder()
                 .imageUrl("A")
                 .camera(camera)
-                .createAt(LocalDateTime.of(2024, 5, 28, 12, 32, 0))
+                .createAt(LocalDateTime.of(2024, 4, 28, 12, 32, 0))
                 .build();
         Alarm alarm4 = Alarm.builder()
                 .imageUrl("A")
                 .camera(camera)
-                .createAt(LocalDateTime.of(2024, 5, 20, 4, 50, 0))
+                .createAt(LocalDateTime.of(2024, 4, 20, 4, 50, 0))
                 .build();
         Alarm alarm5 = Alarm.builder()
                 .imageUrl("A")
                 .camera(camera)
-                .createAt(LocalDateTime.of(2024, 5, 15, 2, 40, 0))
+                .createAt(LocalDateTime.of(2024, 4, 15, 2, 40, 0))
                 .build();
 
 
@@ -140,7 +140,7 @@ public class AppInitService {
                         "실내 청소를 통한 청결 유지\n" +
                         "바퀴의 은신처와 먹이 제거\n" +
                         "습한 환경 지양")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/exterminate_1.png")
                 .bug(roach)
                 .type(BugInfoType.EXTERMINATE)
                 .build();
@@ -149,7 +149,7 @@ public class AppInitService {
                 .title("트랩 설치")
                 .description("바퀴 수가 적거나 은신처가 별로 없을 때 사용\n" +
                         "유인용 먹이를 넣은 끈끈이 트랩은 은폐된 장소에 배치")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/exterminate_2.png")
                 .bug(roach)
                 .type(BugInfoType.EXTERMINATE)
                 .build();
@@ -157,7 +157,7 @@ public class AppInitService {
         BugInformation detectedInfo3 = BugInformation.builder()
                 .title("살충제 사용")
                 .description("바퀴 박멸 시 살충제를 사용함으로써 확실하게 박멸한다.")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/exterminate_3.png")
                 .bug(roach)
                 .type(BugInfoType.EXTERMINATE)
                 .build();
@@ -167,7 +167,7 @@ public class AppInitService {
         BugInformation areaInfo1 = BugInformation.builder()
                 .title("배수관")
                 .description("연결된 배수관을\n통해 벌레가 유입될 수 있어요!\n청소를 자주 해주세요!")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/area_1.png")
                 .bug(roach)
                 .type(BugInfoType.AREA)
                 .build();
@@ -175,7 +175,7 @@ public class AppInitService {
         BugInformation areaInfo2 = BugInformation.builder()
                 .title("신문 및 박스")
                 .description("종이류를 방치하지 마세요!\n새로운 종이류를 가져올 때\n바퀴류가 없는지 확인하세요!")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/area_2.png")
                 .bug(roach)
                 .type(BugInfoType.AREA)
                 .build();
@@ -183,7 +183,7 @@ public class AppInitService {
         BugInformation areaInfo3 = BugInformation.builder()
                 .title("출입문 및 문 하부")
                 .description("문틈으로 벌레가\n침투할 수 있어요!\n방충망을 꼭 사용하세요!")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/area_3.png")
                 .bug(roach)
                 .type(BugInfoType.AREA)
                 .build();
@@ -191,28 +191,28 @@ public class AppInitService {
 
         BugInformation predictInfo1 = BugInformation.builder()
                 .title("음식물 철저히 관리")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/predict_1.png")
                 .bug(roach)
                 .type(BugInfoType.PREDICT)
                 .build();
         bugInfoRepository.save(predictInfo1);
         BugInformation predictInfo2 = BugInformation.builder()
                 .title("실내 청소를 통한 청결 유지")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/predict_2.png")
                 .bug(roach)
                 .type(BugInfoType.PREDICT)
                 .build();
         bugInfoRepository.save(predictInfo2);
         BugInformation predictInfo3 = BugInformation.builder()
                 .title("바퀴의 은신처와 먹이 제공")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/predict_3.png")
                 .bug(roach)
                 .type(BugInfoType.PREDICT)
                 .build();
         bugInfoRepository.save(predictInfo3);
         BugInformation predictInfo4 = BugInformation.builder()
                 .title("습한 환경 지양")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/predict_4.png")
                 .bug(roach)
                 .type(BugInfoType.PREDICT)
                 .build();

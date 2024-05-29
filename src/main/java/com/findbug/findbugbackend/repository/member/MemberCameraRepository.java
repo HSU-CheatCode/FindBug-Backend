@@ -36,6 +36,12 @@ public class MemberCameraRepository {
                 .getSingleResult();
     }
 
+    public Boolean existByMemberId(final Long memberId){
+        return em.createQuery("select case when count(m) > 0 then true else false end from MemberCamera m where m.member.id = :memberId", Boolean.class)
+                .setParameter("memberId", memberId)
+                .getSingleResult();
+    }
+
     public List<MemberCamera> findByMember(final Member member){
         return em.createQuery("select m from MemberCamera m where m.member = :member", MemberCamera.class)
                 .setParameter("member", member)
