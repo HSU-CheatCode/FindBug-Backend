@@ -14,12 +14,12 @@ public class AwsElasticBeanstalkCheckApi {
 
     private final AppInitService initService;
 
-    @PostMapping("initDB")
+    @PostMapping("/initDB")
     public void initDatabaseApi(){
         initService.dbSeeding();
     }
 
-    @GetMapping("health")
+    @GetMapping("/health")
     public String AwsElasticBeanstalkCheck(){
         return "ok";
     }

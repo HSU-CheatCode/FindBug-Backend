@@ -1,18 +1,15 @@
 
-
-# 테스트 설정 yml
-
 server:
-  port: 5000
+  port: 80
   servlet:
     encoding:
       charset: utf-8
 
 spring:
   datasource:
-    url: ${rds.url}
-    username: ${rds.username}
-    password: ${rds.password}
+    url: jdbc:h2:tcp://localhost/~/jpashop
+    username: sa
+    password:
 
   jpa:
     hibernate:
