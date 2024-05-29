@@ -22,6 +22,7 @@ public class MainPageApi {
     @GetMapping("mainPage/{userId}")
     public MainPageDto getMainPage(@PathVariable("userId") Long userId){
 
+
         return mainPageService.getMainPage(userId);
 
 

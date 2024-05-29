@@ -20,8 +20,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: create-drop
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
@@ -33,3 +33,15 @@ logging:
   level:
     org.hibernate.SQL: info
     org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+cloud:
+  aws:
+    s3:
+      bucket: findbugs-bukkit
+    credentials:
+      access-key: YOUR_AWS_ACCESS_KEY
+      secret-key: YOUR_AWS_SECRET_KEY
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
