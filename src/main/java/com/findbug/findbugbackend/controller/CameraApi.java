@@ -19,19 +19,19 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class CameraApi {
 
-    private CameraService cameraService;
+    private final CameraService cameraService;
 
-    @PostMapping("/upload/")
+    @PostMapping("/upload")
     public String uploadImage(
             @RequestParam("file") MultipartFile file,
             @RequestParam("imei") String imei,
             @RequestParam("bugName") String bugName,
             @RequestParam("detectedTime") LocalDateTime detectedTime
     ){
-
         try {
             return cameraService.uploadImage(imei, bugName, detectedTime, file);
         }catch (Exception e) {
+            log.error(e.getMessage());
             return "upload failed";
         }
     }

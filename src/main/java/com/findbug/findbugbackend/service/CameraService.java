@@ -74,6 +74,8 @@ public class CameraService {
         String fileName = file.getOriginalFilename();
         String s3Url = uploadToS3(file.getInputStream(), fileName);
 
+        log.info("s3Url: {}", s3Url);
+
         // 벌레 탐지 알람 저장
         Alarm alarm = Alarm.builder()
                 .camera(camera)
