@@ -94,7 +94,7 @@ public class MemberAlarmRepository {
         List<MemberAlarm> memberAlarms = this.findByMemberId(memberId);
 
         for(MemberAlarm memberAlarm : memberAlarms){
-            em.remove(memberAlarms);
+            em.remove(memberAlarm);
         }
     }
 }
