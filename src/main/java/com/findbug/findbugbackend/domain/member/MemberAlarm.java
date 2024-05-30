@@ -36,6 +36,8 @@ public class MemberAlarm {
         this.isChecked = true;
     }
 
+    public void updateMember(Member member){this.member = member;}
+
     public static MemberAlarm createMemberAlarm(Alarm alarm, Member member) {
         return builder()
                 .alarm(alarm)

@@ -130,7 +130,7 @@ public class AppInitService {
                 .name("바퀴벌레")
                 .title("바퀴벌레")
                 .description("33cm 내외 크기\n250일 생존")
-                .image("")
+                .image("https://findbugs-bukkit.s3.ap-northeast-2.amazonaws.com/bugs_image.png")
                 .build();
 
         //Bug Detected Info Seeding

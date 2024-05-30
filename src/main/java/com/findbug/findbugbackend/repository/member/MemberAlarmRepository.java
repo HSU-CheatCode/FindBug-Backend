@@ -92,9 +92,8 @@ public class MemberAlarmRepository {
 
     public void removeAllByMemberId(Long memberId) {
         List<MemberAlarm> memberAlarms = this.findByMemberId(memberId);
-
         for(MemberAlarm memberAlarm : memberAlarms){
-            em.remove(memberAlarm);
+            memberAlarm.updateMember(null);
         }
     }
 }
