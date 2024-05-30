@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,7 @@ public class MyPageService {
                             .cameraName(alarm.getCamera().getName())
                             .build();
                 })
+                .sorted(Comparator.comparing(MyPageAlarmDto::getCreateAt).reversed())
                 .collect(Collectors.toList());
 
         return MyPageAlarmListDto.builder()
