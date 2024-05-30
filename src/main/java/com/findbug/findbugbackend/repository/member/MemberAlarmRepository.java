@@ -51,6 +51,12 @@ public class MemberAlarmRepository {
                 .getResultList();
     }
 
+    public List<MemberAlarm> findByMemberId(Long memberId){
+        return em.createQuery("select ma from MemberAlarm ma where ma.member.id = :memberId", MemberAlarm.class)
+                .setParameter("memberId", memberId)
+                .getResultList();
+    }
+
     public List<MemberAlarm> findNonCheckedAlarm(Member member){
         return em.createQuery("select m from MemberAlarm m where m.isChecked = :false", MemberAlarm.class)
                 .setParameter("false", false)
@@ -84,7 +90,11 @@ public class MemberAlarmRepository {
 
     }
 
+    public void removeAllByMemberId(Long memberId) {
+        List<MemberAlarm> memberAlarms = this.findByMemberId(memberId);
 
-
-
+        for(MemberAlarm memberAlarm : memberAlarms){
+            em.remove(memberAlarms);
+        }
+    }
 }

@@ -39,6 +39,12 @@ public class MyPageApi {
         return myPageService.getAlarmList(memberId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("myPage/{memberId}/alarms")
+    public String myPageRemoveAllAlarmApi(@PathVariable("memberId") Long memberId) {
+        return myPageService.removeAlarmList(memberId);
+    }
+
     /**
      * 마이페이지 / 카메라 등록
      * 카메라를 등록한다.
@@ -52,6 +58,7 @@ public class MyPageApi {
             @RequestBody MyPageCameraRequestDto myPageCameraRequestDto) {
         return myPageService.joinCamera(memberId, myPageCameraRequestDto);
     }
+
 
     /**
      * 마이페이지 / 회원 정보 수정 페이지 / 회원 정보 조회

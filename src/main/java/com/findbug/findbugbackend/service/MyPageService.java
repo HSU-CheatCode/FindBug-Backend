@@ -4,6 +4,7 @@ package com.findbug.findbugbackend.service;
 import com.findbug.findbugbackend.domain.alarm.Alarm;
 import com.findbug.findbugbackend.domain.bug.DetectedBug;
 import com.findbug.findbugbackend.domain.camera.Camera;
+import com.findbug.findbugbackend.domain.camera.CameraType;
 import com.findbug.findbugbackend.domain.member.Member;
 import com.findbug.findbugbackend.domain.member.MemberAlarm;
 import com.findbug.findbugbackend.domain.member.MemberCamera;
@@ -60,7 +61,7 @@ public class MyPageService {
                             .cameraName(alarm.getCamera().getName())
                             .build();
                 })
-                .sorted(Comparator.comparing(MyPageAlarmDto::getCreateAt).reversed())
+                .sorted(Comparator.comparing(MyPageAlarmDto::getCreateAt))
                 .collect(Collectors.toList());
 
         return MyPageAlarmListDto.builder()
@@ -92,6 +93,12 @@ public class MyPageService {
             if(!isMemberCameraSaved){
                 // MemberAlarm update
                 List<Alarm> alarmList = alarmRepository.findByCamera(savedCamera);
+                savedCamera.updateCamera(
+                        CameraType.RASPBERRYPI_3_B_PLUS,
+                        myPageCameraRequestDto.getName(),
+                        myPageCameraRequestDto.getDescription()
+                );
+
                 for(Alarm alarm : alarmList){
                     memberAlarmRepository.save(MemberAlarm.builder()
                             .alarm(alarm)
@@ -145,5 +152,11 @@ public class MyPageService {
         memberRepository.save(member);
 
         return new MyPageMemberResponseDto(true);
+    }
+
+    @Transactional
+    public String removeAlarmList(Long memberId) {
+        memberAlarmRepository.removeAllByMemberId(memberId);
+        return "ok";
     }
 }

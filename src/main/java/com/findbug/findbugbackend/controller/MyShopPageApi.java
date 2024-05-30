@@ -34,6 +34,20 @@ public class MyShopPageApi {
         return new MyShopStatusDto(myShopPageService.getMyShopStatus(memberId));
     }
 
+    //TEST
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("myShopPage/{memberId}/true")
+    public MyShopStatusDto MyShopStatusApiTrue(@PathVariable Long memberId) {
+        return new MyShopStatusDto(true);
+    }
+
+    //TEST
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("myShopPage/{memberId}/false")
+    public MyShopStatusDto MyShopStatusApiFalse(@PathVariable Long memberId) {
+        return new MyShopStatusDto(true);
+    }
+
     /**
      * 2.
      * 나의 가게 / 벌레 예방 정보 API

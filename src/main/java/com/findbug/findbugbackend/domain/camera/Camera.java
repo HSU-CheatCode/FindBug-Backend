@@ -36,4 +36,10 @@ public class Camera {
                 .description(description)
                 .build();
     }
+
+    public void updateCamera(CameraType type, String name, String description) {
+        this.type = type;
+        this.name = name;
+        this.description = description;
+    }
 }

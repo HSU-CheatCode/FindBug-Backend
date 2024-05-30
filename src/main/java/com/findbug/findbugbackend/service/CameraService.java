@@ -60,13 +60,13 @@ public class CameraService {
     public String uploadImage(String imei, String bugName, LocalDateTime detectedTime, MultipartFile file) throws IOException {
 
 
-        // 여기서 문제 발생
         // 카메라 등록 여부 조회 및 카메라 조회
         if(!cameraRepository.existByIMEI(imei)){
             cameraRepository.save(
                     Camera.builder()
                             .type(CameraType.RASPBERRYPI_3_B_PLUS)
                             .IMEI(imei)
+                            .name("라즈베리파이3B+")
                             .build()
                     );
 

@@ -47,7 +47,7 @@ public class AppInitService {
         // Camera Seeding
         Camera camera = Camera.builder()
                 .IMEI("#HE332EJK")
-                .name("HSU 라즈베리파이3B+")
+                .name("라즈베리파이3B+")
                 .description("운영 중인 식당 카메라")
                 .type(CameraType.RASPBERRYPI_3_B_PLUS)
                 .build();
