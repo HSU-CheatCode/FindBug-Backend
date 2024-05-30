@@ -30,6 +30,7 @@ public class CameraRepository {
     public Camera findByIMEI(final String imei){
         return em.createQuery("select c from Camera c where c.IMEI = :IMEI", Camera.class)
                 .setParameter("IMEI", imei)
+                .setMaxResults(1)
                 .getSingleResult();
     }
 
@@ -38,6 +39,7 @@ public class CameraRepository {
                         "from Camera c " +
                         "where c.IMEI = :IMEI", Boolean.class)
                 .setParameter("IMEI", imei)
+                .setMaxResults(1)
                 .getSingleResult();
     }
 

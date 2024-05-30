@@ -15,12 +15,18 @@ public class AwsHealthCheck {
     private final AppInitService initService;
 
     @PostMapping("/initDB")
-    public void initDatabaseApi(){
+    public String initDatabaseApi(){
         initService.dbSeeding();
+        return "initOK";
     }
 
     @GetMapping("/health")
     public String AwsElasticBeanstalkCheck(){
+        return "ok";
+    }
+
+    @GetMapping("/")
+    public String defaultHealthCheck(){
         return "ok";
     }
 }

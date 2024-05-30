@@ -59,14 +59,17 @@ public class CameraService {
 
     public String uploadImage(String imei, String bugName, LocalDateTime detectedTime, MultipartFile file) throws IOException {
 
+
+        // 여기서 문제 발생
         // 카메라 등록 여부 조회 및 카메라 조회
-        if(!cameraRepository.existByIMEI("imei")){
+        if(!cameraRepository.existByIMEI(imei)){
             cameraRepository.save(
                     Camera.builder()
                             .type(CameraType.RASPBERRYPI_3_B_PLUS)
                             .IMEI(imei)
                             .build()
                     );
+
         }
         Camera camera = cameraRepository.findByIMEI(imei);
 
@@ -89,6 +92,7 @@ public class CameraService {
                 .detectedDate(detectedTime)
                 .build()
         );
+
         List<Member> memberList = memberRepository.findByCamera(camera);
         for(Member member : memberList){
             memberAlarmRepository.save(MemberAlarm.builder()
@@ -97,6 +101,10 @@ public class CameraService {
                     .isChecked(false)
                     .build());
         }
+
+        // member가 없는 카메라의 경우, 여기서 어떠한 값도 등록되지 않았을 것이다.
+        // post 과정에서 일괄 종합 시키는 과정이 필요할 것으로 보인다.
+
 
         return s3Url;
     }

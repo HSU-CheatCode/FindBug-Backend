@@ -1,13 +1,16 @@
 package com.findbug.findbugbackend.service;
 
 
+import com.findbug.findbugbackend.domain.alarm.Alarm;
 import com.findbug.findbugbackend.domain.bug.DetectedBug;
 import com.findbug.findbugbackend.domain.camera.Camera;
 import com.findbug.findbugbackend.domain.member.Member;
+import com.findbug.findbugbackend.domain.member.MemberAlarm;
 import com.findbug.findbugbackend.domain.member.MemberCamera;
 import com.findbug.findbugbackend.dto.MyPage.*;
 import com.findbug.findbugbackend.repository.alarm.AlarmRepository;
 import com.findbug.findbugbackend.repository.camera.CameraRepository;
+import com.findbug.findbugbackend.repository.member.MemberAlarmRepository;
 import com.findbug.findbugbackend.repository.member.MemberCameraRepository;
 import com.findbug.findbugbackend.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class MyPageService {
     private final AlarmRepository alarmRepository;
     private final MemberRepository memberRepository;
     private final MemberCameraRepository memberCameraRepository;
+    private final MemberAlarmRepository memberAlarmRepository;
     private final CameraRepository cameraRepository;
 
     public MyPageProfileDto getProfile(Long memberId){
@@ -42,14 +46,11 @@ public class MyPageService {
     public MyPageAlarmListDto getAlarmList(Long memberId){
         List<MyPageAlarmDto> alarmListDto = alarmRepository.findByMemberId(memberId).stream()
                 .map(alarm -> {
+
                     DetectedBug detectedBug = alarm.getDetectedBugs().isEmpty() ? null : alarm.getDetectedBugs().get(0);
-                    log.info("alarm id = {}", alarm.getId());
-                    log.info("detectedBug size = {}", alarm.getDetectedBugs().size());
-                    log.info("detectedBug getId = {}", detectedBug.getId());
-                    log.info("detectedBug getId = {}", detectedBug.getBug());
-                    log.info("detectedBug getId = {}", detectedBug.getBug().getId());
-                    log.info("detectedBug getId.getBug ={}", detectedBug.getBug().getName());
+
                     String bugName = detectedBug != null ? detectedBug.getBug().getName() : null;
+
                     return MyPageAlarmDto.builder()
                             .alarmId(alarm.getId())
                             .imageUrl(alarm.getImageUrl())
@@ -77,17 +78,25 @@ public class MyPageService {
                 myPageCameraRequestDto.getDescription()
         );
 
-        Boolean isCameraSaved = cameraRepository.existByIMEI(camera.getIMEI());
-        log.info("exist = {}", isCameraSaved);
-        // 검증 필요
+        Boolean isCameraSaved = cameraRepository.existByIMEI(myPageCameraRequestDto.getImei());
+        log.info("{} is exist = {}", camera.getIMEI(), isCameraSaved);
 
         if(!isCameraSaved){
             // Camera가 등록되지 아니한 경우
             return UpdateCamera(camera, member);
         }else{
-            Camera savedCamera = cameraRepository.findByIMEI(camera.getIMEI());
+            Camera savedCamera = cameraRepository.findByIMEI(myPageCameraRequestDto.getImei());
             Boolean isMemberCameraSaved = memberCameraRepository.existByCamera(savedCamera);
             if(!isMemberCameraSaved){
+                // MemberAlarm update
+                List<Alarm> alarmList = alarmRepository.findByCamera(savedCamera);
+                for(Alarm alarm : alarmList){
+                    memberAlarmRepository.save(MemberAlarm.builder()
+                            .alarm(alarm)
+                            .member(member)
+                            .isChecked(false)
+                            .build());
+                }
                 return UpdateCamera(savedCamera, member);
             }
             else{

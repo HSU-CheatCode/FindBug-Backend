@@ -43,7 +43,7 @@ public class MemberRepository {
     }
 
     public List<Member> findByCamera(Camera camera) {
-        return em.createQuery("select m from Member m join MemberCamera mc where mc.camera = :camera", Member.class)
+        return em.createQuery("select m from Member m join MemberCamera mc on mc.member = m where mc.camera = :camera", Member.class)
                 .setParameter("camera", camera)
                 .getResultList();
     }

@@ -1,6 +1,7 @@
 package com.findbug.findbugbackend.repository.alarm;
 
 import com.findbug.findbugbackend.domain.alarm.Alarm;
+import com.findbug.findbugbackend.domain.camera.Camera;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,5 +69,11 @@ public class AlarmRepository {
                 .setParameter("memberId", memberId)
                 .setMaxResults(1)
                 .getSingleResult();
+    }
+
+    public List<Alarm> findByCamera(Camera camera) {
+        return em.createQuery("select a from Alarm a join Camera c on a.camera = :camera", Alarm.class)
+                .setParameter("camera", camera)
+                .getResultList();
     }
 }
